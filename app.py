@@ -36,7 +36,7 @@ def index():
 
 @app.route('/GAMING', methods=['POST','GET'])
 def gaming():
-    return chatlog
+    return render_template('gaming.html', chatlog=chatlog)
 
 hostname=socket.gethostname()
 hostipaddress = socket.gethostbyname(hostname)

@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+
+{% block head %}
+<title>GAMING</title>
+{% endblock %}
+
+
+{% block body %}
+
+<div class="chatlog">
+    <ol>
+        {% for chat in chatlog %}
+        <li>{{ chat }}</li>
+        {% endfor %}
+    </ol>
+    
+</div>
+
+{% endblock %}
