@@ -7,6 +7,13 @@
 
 
 {% block body %}
-<h1>hi</h1>
+<h1>{{ message }}</h1>
 <p>your ip address = {{ ip }}</p>
+
+<form action="/" method="POST">
+    <h2>Enter your nickname:</h2>
+    <input type="text" name="getnickname" id="getnickname">
+    <input type="submit" value="Join">
+</form>
+
 {% endblock %}
