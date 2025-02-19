@@ -8,13 +8,55 @@
 
 {% block body %}
 
-<div class="chatlog">
-    <ol>
-        {% for chat in chatlog %}
-        <li>{{ chat }}</li>
-        {% endfor %}
-    </ol>
-    
-</div>
+
+<table id="mainlayout" class="mainlayout">
+    <tr>
+        <td>
+            <table class="pfps">
+                <tr>
+                    <td>
+                        <img src="{{ url_for('static', filename='images/defaultpfps/0.webp') }}" alt="pfp", height="200px">
+                    </td>
+                    <td>
+                        <p>hello</p>
+                    </td>
+                </tr>
+            </table>
+        </td>
+        <td>
+            <div class="chatlogcontainer">
+                <ol class="chatlog" id="chat">
+                    {% for chat in chatlog %}
+                    <li>{{ chat }}</li>
+                    {% endfor %}
+                </ol>
+                <input type="text" id="message">
+                <button onclick="sendMessage()">Send</button>
+            </div>
+        </td>
+    </tr>
+</table>
+
+
+
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"></script>
+<script>
+    var socket = io();
+
+    socket.on("update_chatlog", function(chatlog) {
+        let chatDiv = document.getElementById("chat");
+        chatDiv.innerHTML = "<li>" + chatlog.join("</li><li>") + "<\li>"
+    });
+
+    function sendMessage() {
+        let message = document.getElementById("message").value;
+        socket.emit("send_message", {message: message});
+        document.getElementById("message").value = "";
+    }
+
+</script>
+
 
 {% endblock %}

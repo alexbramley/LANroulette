@@ -4,3 +4,42 @@ body {
     font-family: monospace;
     color: rgb(0, 255, 255);
 }
+
+.chatlogcontainer {
+    color: blueviolet;
+}
+
+table.mainlayout {
+    width: 100%;
+    border: 1px solid;
+    border-collapse: collapse;
+}
+
+table.mainlayout th, table.mainlayout td {
+    width: 50%;
+    border: 1px solid;
+    border-color: blueviolet;
+}
+
+table.pfps {
+    width: 100%;
+    border: 1px solid;
+    border-collapse: collapse;
+}
+
+table.pfps tr {
+    border: 1px solid;
+    border-color: aqua;
+}
+
+table.pfps th, table.pfps td {
+    width: 50%;
+    border: none;
+    text-align: center; 
+    vertical-align: middle;
+    
+}
+
+ol.chatlog {
+    list-style-type: none;
+}
