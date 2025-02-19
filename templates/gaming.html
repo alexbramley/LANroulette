@@ -8,36 +8,42 @@
 
 {% block body %}
 
+<body onload="updatePlayerList()"
 
 <table id="mainlayout" class="mainlayout">
     <tr>
         <td>
-            <table class="pfps">
+            <table class="pfps" id="playersTable">
+                {% for player in players %}
                 <tr>
                     <td>
+                        <h2>name</h2>
+                        <br>
                         <img src="{{ url_for('static', filename='images/defaultpfps/0.webp') }}" alt="pfp", height="200px">
                     </td>
                     <td>
-                        <p>hello</p>
+                        <button onclick="shootPlayer()">SHOOT</button>
+                    </td>
+                    <td>
+                        <p>health_placeholder</p>
                     </td>
                 </tr>
+                {% endfor %}
             </table>
-        </td>
-        <td>
-            <div class="chatlogcontainer">
-                <ol class="chatlog" id="chat">
-                    {% for chat in chatlog %}
-                    <li>{{ chat }}</li>
-                    {% endfor %}
-                </ol>
-                <input type="text" id="message">
-                <button onclick="sendMessage()">Send</button>
-            </div>
         </td>
     </tr>
 </table>
 
 
+<div class="chatlogcontainer">
+    <ol class="chatlog" id="chat">
+        {% for chat in chatlog %}
+        <li>{{ chat }}</li>
+        {% endfor %}
+    </ol>
+    <input type="text" id="message">
+    <button onclick="sendMessage()">Send</button>
+</div>
 
 
 
@@ -45,7 +51,29 @@
 <script>
     var socket = io();
 
+    var playerTableRowHTML =
+    `
+    <tr>
+        <td>
+            <h2>jsjsjs</h2>
+            <br>
+            <img src="{{ url_for('static', filename='images/defaultpfps/0.webp') }}" alt="pfp", height="200px">
+        </td>
+        <td>
+            <button onclick="shootPlayer()">SHOOT</button>
+        </td>
+        <td>
+            <p>health_placeholder</p>
+        </td>
+    </tr>
+    `;
+    
+    var player_data = JSON.parse('{{ player_data | tojson }}');
+
+
+
     socket.on("update_chatlog", function(chatlog) {
+        console.log("we're updating the chat rn")
         let chatDiv = document.getElementById("chat");
         chatDiv.innerHTML = "<li>" + chatlog.join("</li><li>") + "<\li>"
     });
@@ -54,6 +82,22 @@
         let message = document.getElementById("message").value;
         socket.emit("send_message", {message: message});
         document.getElementById("message").value = "";
+    }
+
+    socket.on("update_players", function(players) {
+        player_data = players
+        updatePlayerList()
+    });
+
+
+    function updatePlayerList() {
+        console.log("we're updating the playyers rn")
+        let playersTable = document.getElementById("playersTable");
+        playersTable.innerHTML = "";
+        player_data.forEach(player => {
+            console.log(player[0])
+            playersTable.innerHTML += playerTableRowHTML
+        });
     }
 
 </script>

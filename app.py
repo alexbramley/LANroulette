@@ -17,7 +17,7 @@ class User:
 
 chatlog = []
 
-
+user_data = []
 
 
 @app.route('/', methods=['POST','GET'])
@@ -38,8 +38,10 @@ def index():
         if nickname == "":
             return redirect('/')
         users.update({ip: User(ip, nickname, 0)})
+        user_data.append([str(ip), str(nickname)])
         chatlog.append(f"{nickname} is here.")
         socketio.emit("update_chatlog", chatlog, include_self=True)
+        socketio.emit("update_players", user_data, include_self=True)
         return redirect('/GAMING')
 
 
@@ -51,7 +53,7 @@ def gaming():
     if not users.__contains__(ip):
         return redirect('/')
     
-    return render_template('gaming.html', chatlog=chatlog)
+    return render_template('gaming.html', chatlog=chatlog, players=users, player_data=user_data)
 
 
 @socketio.on("send_message")
