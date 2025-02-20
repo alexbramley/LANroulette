@@ -19,7 +19,7 @@
                     <td>
                         <h2>name</h2>
                         <br>
-                        <img src="{{ url_for('static', filename='images/defaultpfps/0.webp') }}" alt="pfp", height="200px">
+                        <img src="{{ url_for('static', filename='images/defaultpfps/charlie.png') }}" alt="pfp", height="200px">
                     </td>
                     <td>
                         <button onclick="shootPlayer()">SHOOT</button>
@@ -46,18 +46,12 @@
 </div>
 
 
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"></script>
-<script>
-    var socket = io();
-
-    var playerTableRowHTML =
-    `
+<template id="playerrowtemplate">
     <tr>
         <td>
-            <h2>jsjsjs</h2>
-            <br>
-            <img src="{{ url_for('static', filename='images/defaultpfps/0.webp') }}" alt="pfp", height="200px">
+            <h2 id="playernickname"></h2>
+            <p id="playeripaddress" class="subtext"></p>
+            <img src="{{ url_for('static', filename='images/defaultpfps/0.webp') }}" alt="pfp", class="pfpimage" id="playerpfpimage">
         </td>
         <td>
             <button onclick="shootPlayer()">SHOOT</button>
@@ -66,10 +60,20 @@
             <p>health_placeholder</p>
         </td>
     </tr>
-    `;
+</template>
+
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"></script>
+<script>
+    var socket = io();
+
     
     var player_data = JSON.parse('{{ player_data | tojson }}');
 
+    const pfpsLocation = "/static/images/defaultpfps/${filename}"
+
+    const defaultpfps = ["dealer.webp","johnhelldiver.webp"]
 
 
     socket.on("update_chatlog", function(chatlog) {
@@ -94,9 +98,29 @@
         console.log("we're updating the playyers rn")
         let playersTable = document.getElementById("playersTable");
         playersTable.innerHTML = "";
+        const template = document.querySelector("#playerrowtemplate")
+        
+        let i = 0;
         player_data.forEach(player => {
-            console.log(player[0])
-            playersTable.innerHTML += playerTableRowHTML
+            const clone = template.content.cloneNode(true);
+
+            let filename = defaultpfps[i];
+            let pfpLocation = eval('`'+pfpsLocation+'`');
+            console.log(pfpLocation);
+
+            let nameElement = clone.getElementById("playernickname");
+            nameElement.textContent = player[1];
+            
+            let ipElement = clone.getElementById("playeripaddress");
+            ipElement.textContent = player[0];
+            
+            let pfpElement = clone.getElementById("playerpfpimage");
+            pfpElement.src = pfpLocation;
+
+            playersTable.appendChild(clone);
+
+            console.log(player[0]);
+            i++;
         });
     }
 

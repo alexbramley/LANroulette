@@ -38,7 +38,7 @@ def index():
         if nickname == "":
             return redirect('/')
         users.update({ip: User(ip, nickname, 0)})
-        user_data.append([str(ip), str(nickname)])
+        user_data.append([ip, nickname])
         chatlog.append(f"{nickname} is here.")
         socketio.emit("update_chatlog", chatlog, include_self=True)
         socketio.emit("update_players", user_data, include_self=True)

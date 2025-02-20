@@ -7,7 +7,7 @@ body {
 
 .chatlogcontainer {
     text-align: center;
-    width: 30%;
+    width: 300px;
     color: blueviolet;
     border: 3px solid white;
 }
@@ -46,4 +46,20 @@ table.pfps th, table.pfps td {
 ol.chatlog {
     list-style-type: none;
     text-align: left;
+}
+
+img.pfpimage {
+    width: 75%;
+    margin-bottom: 5%;
+}
+
+p.subtext {
+    color: white;
+    opacity: 50%;
+    font-size: smaller;
+    font-family: monospace;
+}
+
+h2 {
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 }
