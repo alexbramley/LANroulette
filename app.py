@@ -53,7 +53,7 @@ def gaming():
     if not users.__contains__(ip):
         return redirect('/')
     
-    return render_template('gaming.html', chatlog=chatlog, players=users, player_data=user_data)
+    return render_template('gaming.html', chatlog=chatlog, players=users, player_data=user_data, myIP=ip)
 
 
 @socketio.on("send_message")

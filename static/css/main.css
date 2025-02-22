@@ -1,6 +1,6 @@
 body {
     background-color: midnightblue;
-    margin: 10;
+    margin: 10px;
     font-family: monospace;
     color: rgb(0, 255, 255);
 }
@@ -9,7 +9,7 @@ body {
     text-align: center;
     width: 300px;
     color: blueviolet;
-    border: 3px solid white;
+    border: 1px solid cadetblue;
 }
 
 table.mainlayout {
@@ -49,7 +49,7 @@ ol.chatlog {
 }
 
 img.pfpimage {
-    width: 75%;
+    width: 100px;
     margin-bottom: 5%;
 }
 
