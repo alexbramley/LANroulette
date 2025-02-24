@@ -1,6 +1,7 @@
 from flask import Flask, render_template, url_for, request, redirect
 from flask_socketio import SocketIO, emit
 import socket
+import threading
 
 app = Flask(__name__)
 socketio = SocketIO(app)
@@ -65,5 +66,9 @@ def handle_message(data):
 hostname = socket.gethostname()
 hostipaddress = socket.gethostbyname(hostname)
 
+
+
+
 if __name__ == "__main__":
+
     app.run(host=hostipaddress, port=PORT_NUMBER, debug=True)

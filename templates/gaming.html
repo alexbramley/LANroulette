@@ -56,7 +56,7 @@
             <img src="{{ url_for('static', filename='images/defaultpfps/0.webp') }}" alt="pfp", class="pfpimage" id="playerpfpimage">
         </td>
         <td>
-            <button onclick="shootPlayer()">SHOOT</button>
+            <button onclick="shootPlayer()" id="shootbutton" class="shootbutton">SHOOT</button>
         </td>
         <td>
             <p>health_placeholder</p>
@@ -68,6 +68,7 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"></script>
 <script>
+
     var socket = io();
 
     var myIP = '{{ myIP }}'
@@ -124,6 +125,10 @@
             let pfpElement = clone.getElementById("playerpfpimage");
             pfpElement.src = pfpLocation;
 
+            let shootButtonElement = clone.getElementById("shootbutton");
+            shootButtonElement.textContent = "button button button";
+            shootButtonElement.setAttribute("onclick","shootPlayer("+i+")")
+
             playersTable.appendChild(clone);
 
             console.log(player[0]);
@@ -136,6 +141,12 @@
             location.reload();
         };
     };
+
+    function shootPlayer(targetPlayerIndex) {
+        console.log(player_data)
+        console.log(targetPlayerIndex)
+        console.log("we are shooting at player " + targetPlayerIndex + ", which has ip address: " + player_data[targetPlayerIndex][0]);
+    }
 
 </script>
 
