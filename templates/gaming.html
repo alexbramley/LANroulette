@@ -106,6 +106,14 @@
         let playersTable = document.getElementById("playersTable");
         playersTable.innerHTML = "";
         const template = document.querySelector("#playerrowtemplate")
+
+        currentPlayerIndex = 0;
+        player_data.forEach(player => {
+            if (player_data[0] == myIP) {
+                break;
+            };
+            currentPlayerIndex ++;
+        });
         
         let isCurrentPlayerConnected = false
         let i = 0;
@@ -127,7 +135,7 @@
 
             let shootButtonElement = clone.getElementById("shootbutton");
             shootButtonElement.textContent = "button button button";
-            shootButtonElement.setAttribute("onclick","shootPlayer("+i+")")
+            shootButtonElement.setAttribute("onclick","shootPlayer("++","+i+")");
 
             playersTable.appendChild(clone);
 
@@ -142,10 +150,12 @@
         };
     };
 
-    function shootPlayer(targetPlayerIndex) {
+    function shootPlayer(attackingPlayerIndex, targetPlayerIndex) {
         console.log(player_data)
         console.log(targetPlayerIndex)
         console.log("we are shooting at player " + targetPlayerIndex + ", which has ip address: " + player_data[targetPlayerIndex][0]);
+
+        socket.emit("shoot_player", {targetPlayerIndex:targetPlayerIndex, attackingPlayerIndex:attackingPlayerIndex});
     }
 
 </script>

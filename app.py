@@ -63,10 +63,15 @@ def handle_message(data):
     chatlog.append(message)
     emit("update_chatlog", chatlog, broadcast=True)
 
+@socketio.on("shoot_player")
+def handle_shoot(data):
+    target_player_index = data["targetPlayerIndex"]
+    print(target_player_index)
+
+
+
 hostname = socket.gethostname()
 hostipaddress = socket.gethostbyname(hostname)
-
-
 
 
 if __name__ == "__main__":
